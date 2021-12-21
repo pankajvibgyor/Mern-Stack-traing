@@ -1,4 +1,4 @@
-import React, {useState,useContext} from "react"
+import React, {useState,useContext, useEffect} from "react"
 import "./login.css"
 import axios from "axios"
 import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
@@ -6,13 +6,15 @@ import { useNavigate } from 'react-router-dom';
 import { ValueContext } from "../../contextComponent/Valuecontext";
 const Login = () => {
 
-    const{user,setUser,handelChange}=useContext(ValueContext) //context api formation using useContext
-   
+    const{user,setAuth,setUser,handelChange}=useContext(ValueContext) //context api formation using useContext
+    // const {email,password} = user
     const [open, setOpen] = useState(false)
     // handle toggle 
     const toggle = () =>{
         setOpen(!open)
     }
+  
+
 
     const navigate = useNavigate();
 
@@ -20,16 +22,19 @@ const Login = () => {
         axios.post("http://localhost:4000/login",user)
         .then(res=>{
             alert(res.data.message)
-            // setLoginUser(res.data.user)
             setUser(res.data.user)  
-            localStorage.setItem(user,JSON.stringify(user));
+            localStorage.setItem('id',JSON.stringify(res.data.user._id));
+            // setAuth(true)
             // localStorage.setItem('password', password);          
             navigate('/homepage')
             
         })
        
     }
- 
+    useEffect(()=>{
+        if(
+   localStorage.getItem('id') ){setAuth(true)} else setAuth(false)
+        })
     return (
         <div className="login">
             <h1>Login</h1>

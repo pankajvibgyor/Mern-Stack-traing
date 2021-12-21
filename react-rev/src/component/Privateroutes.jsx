@@ -1,32 +1,16 @@
-import { useContext } from 'react';
-import {
-  Route,
- 
-  Navigate,
-  Routes
-} from 'react-router-dom';
-import { ValueContext } from '../contextComponent/Valuecontext';
-import Alluser from './Alluser';
-const Privateroutes= () => {
-  const{user}=useContext(ValueContext)
-  const userLoggedIn = localStorage.getItem(user);
-  return (
-    <Routes>
-    <Route
-     
-      render={() => (
-        userLoggedIn
-          ? <Alluser/>
-          : (
-            <Navigate to='/'
-            />
-          )
-      )}
-    />
-    </Routes>
-  );
-};
 
+import React,{useContext} from 'react';
+import { Navigate } from 'react-router-dom';
+import Alluser from './Alluser';
+import { ValueContext } from '../contextComponent/Valuecontext';
+const Privateroutes = ({component:Component}) => {
+  const {Auth}=useContext(ValueContext)
+    const auth = Auth; // determine if authorized, from context or however you're doing it
+
+    // If authorized, return an outlet that will render child elements
+    // If not, return element that will navigate to login page
+    return auth ? <Component/> : <Navigate to="/" />;
+}
 export default Privateroutes 
 //  import React from 'react';
 //  import { Navigate, Route } from 'react-router-dom';
