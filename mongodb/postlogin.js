@@ -5,7 +5,9 @@ router.post('/login', (req,res)=>{
     const {email,password}=req.body
     dataSchema.findOne({email:email},(err,user)=>{
         if(user){
-            if(password===user.password){
+            const isMatch= bcrypt.compare(password,user.password)
+
+            if(isMatch){
             res.send({message:"Login succesfully",user:user})
         }
         else{

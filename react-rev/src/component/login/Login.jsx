@@ -22,7 +22,7 @@ const Login = () => {
         axios.post("http://localhost:4000/login",user)
         .then(res=>{
             alert(res.data.message)
-            setUser(res.data.user)  
+            setUser(res.data.user||{})  
             localStorage.setItem('id',JSON.stringify(res.data.user._id));
             // setAuth(true)
             // localStorage.setItem('password', password);          
