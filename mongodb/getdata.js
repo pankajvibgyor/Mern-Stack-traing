@@ -6,7 +6,7 @@ const dataSchema=require('./data')
 router.get("/get",async(req,res)=>{
     dataSchema.find().then((user)=>{
         res.json(user)
-        console.log(user)
+    
     })
     .catch(err=>{
         console.log(err)

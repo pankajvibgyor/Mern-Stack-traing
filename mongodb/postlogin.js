@@ -13,7 +13,7 @@ try{
             let token=await  user.generateAuthToken();
             console.log(token)
             res.cookie("jwtToken",token),{
-                expires: new Date(Date.now()+259200000)  ,
+                expires: new Date(Date.now()+259200000),
                 httpOnly:true 
             }
 

@@ -18,7 +18,7 @@ router.post('/register', (req,res)=>{
                 }
                 else{
                     console.log(user)
-                    res.send({message:success("Succesfully Register now you can login")})
+                    res.send({message:"Succesfully Register now you can login"})
                       
                 }
             })

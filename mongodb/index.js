@@ -1,12 +1,16 @@
 const express =require('express')
 const cors=require('cors')
+const dotenv =require('dotenv')
 const mongoose = require('mongoose');
 const login=require('./postlogin')
 const register=require('./postregister')
 const getData=require('./getdata')
 const deleteData=require('./delete')
 const patchData=require('./patch')
-
+dotenv.config({path:'./config.env'})
+const router=require('./router/router')
+const sortedData= require('./sortedData')
+// const encrpt=require('./encryptionPass')
 
 const app=express()
 mongoose.connect("mongodb://localhost:27017/formdata",{useNewUrlParser: true , useUnifiedTopology: true })
@@ -14,8 +18,8 @@ mongoose.connect("mongodb://localhost:27017/formdata",{useNewUrlParser: true , u
 
 // mideelware creation
 app.use(express.json())
-app.use(cors())
-app.use(login,register,getData,deleteData,patchData)
+app.use(cors()) 
+app.use(login,register,getData,deleteData,patchData,router,sortedData)
 
 
 

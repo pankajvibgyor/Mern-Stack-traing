@@ -30,31 +30,29 @@ function Registration() {
        
      if( firstName && lastName && Gender&& email && password && (password === reEnterPassword)){
         axios.post("http://localhost:4000/register",user)
-        .then(res=>alert(res.data.message))
-        navigate('/login')
+        .then(res=>{
+            alert(res.data.message)
+            setUser(res.data.user ||{})
+       
+        })
+        navigate('/')
         
         }
      else {
-        toast.error("invlid input",{position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-         })
+        alert("invlid input")
+    
     }}
     return (
         <div className="register">
        
         <h1>Register</h1>
-        <input type="text" name="firstName" value={firstName} placeholder="first name" onChange={handelChange} ></input>
-        <input type="text" name="lastName" value={lastName} placeholder="last name" onChange={handelChange} ></input>
-        <input type="text" name="Gender" value={Gender}  placeholder="gender" onChange={handelChange}></input>
-        <input type="text" name="email" value={email} placeholder="your email" onChange={handelChange}></input>
+        <input type="text" autoComplete="off" name="firstName" value={firstName} placeholder="first name" onChange={handelChange} ></input>
+        <input type="text"autoComplete="off" name="lastName" value={lastName} placeholder="last name" onChange={handelChange} ></input>
+        <input type="text"autoComplete="off" name="Gender" value={Gender}  placeholder="gender" onChange={handelChange}></input>
+        <input type="text"autoComplete="off" name="email" value={email} placeholder="your email" onChange={handelChange}></input>
         <input type={(open === false)? 'password' :'text'} name="password" value={password} placeholder="your password" onChange={handelChange}></input>
           <div className='paseye' style={{marginLeft:"18rem"}}> {(open === false)? <AiFillEye onClick={toggle}/>:<AiFillEyeInvisible onClick={toggle}/>}</div>
-        <input type="password" name="reEnterPassword" value={reEnterPassword} placeholder="Re-enter Password" onChange={handelChange}></input>
+        <input autoComplete="off"type="password" name="reEnterPassword" value={reEnterPassword} placeholder="Re-enter Password" onChange={handelChange}></input>
         <div className="button"onClick={register} >Register</div>
         <div>or</div>
         <div className="button" onClick={()=>navigate('/')} >Login</div>

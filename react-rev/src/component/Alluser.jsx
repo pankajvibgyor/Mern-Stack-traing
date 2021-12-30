@@ -2,6 +2,7 @@ import React,{useEffect,useState} from 'react'
 // import DeleteUser from './DeleteUser';
 import {Link} from 'react-router-dom'
 
+
 function Alluser() {
     const[data,setData]=useState([]);
 
@@ -34,10 +35,22 @@ function Alluser() {
     getUser()
     window.alert(`deleted successfully`)
         }
+        const handelClick=async()=>{
+            await fetch("http://localhost:4000/sortedData").then((response) =>{
+                response.json().then((resp)=>{ 
+                             
+                    setData(resp)
+                })
+                window.alert(`updated sucessfully`)
+               
+            })
+    
+        }
           
         
           
     return (
+        <>
         
              
     <div>
@@ -80,10 +93,14 @@ function Alluser() {
                     
                 </tbody>
             </table>
-      
+ 
             
         </div>
+        <button style={{marginLeft:"30rem"}}onClick={handelClick} className="btn btn-primary">Sorted FirstName</button>
+        <button style={{marginLeft:"41rem",marginTop:"-4rem"}}onClick={getUser} className="btn btn-danger">UnsortData</button>
+</>            
     )
+    
 }
 
 export default Alluser

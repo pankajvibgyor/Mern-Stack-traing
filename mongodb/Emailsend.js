@@ -1,12 +1,13 @@
 const express=require('express')
 const router=express.Router()
 const dataSchema=require('./data')
+const jwt=require('jsonwebtoken')
 
 
 
 router.post('/emailsend',async(req,res)=>{
-    let data=await user.findOne({email:req.body.email});
-    const response={};
+    let data=await dataSchema.findOne({email:req.body.email});
+    const responseType={};
     if(data){
         let otpCode=Math.floor((Math.random()*10000+1));
         let dataSchema=new otp({

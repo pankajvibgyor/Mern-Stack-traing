@@ -2,7 +2,7 @@ import React, {useState,useContext, useEffect} from "react"
 import "./login.css"
 import axios from "axios"
 import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ValueContext } from "../../contextComponent/Valuecontext";
 const Login = () => {
 
@@ -15,35 +15,43 @@ const Login = () => {
     }
   
 
-
+console.log(user.email)
     const navigate = useNavigate();
 
      const login=()=>{
         axios.post("http://localhost:4000/login",user)
         .then(res=>{
             alert(res.data.message)
-            setUser(res.data.user||{})  
+            setUser(res.data.user ||{}) 
+            if(res.data.user){ 
             localStorage.setItem('id',JSON.stringify(res.data.user._id));
-            // setAuth(true)
-            // localStorage.setItem('password', password);          
             navigate('/homepage')
+            // setAuth(true)
+            }
+
+          
             
         })
        
     }
     useEffect(()=>{
-        if(
-   localStorage.getItem('id') ){setAuth(true)} else setAuth(false)
-        })
+        if(localStorage.getItem('id') ){
+            setAuth(true)
+        } 
+        else{ 
+        setAuth(false)
+        }
+    })
     return (
         <div className="login">
             <h1>Login</h1>
-            <input type="text" name='email'  value={user.email} placeholder="Enter your Email" onChange={handelChange}></input>
-            <input type={(open === false)? 'password' :'text'}  name="password" value={user.password} placeholder="Enter your Password" onChange={handelChange} ></input>
+            <input type="text" autoComplete="on" name='email'  value={user.email} placeholder="Enter your Email" onChange={handelChange}></input>
+            <input type={(open === false)? 'password' :'text'} autoComplete="on" name="password" value={user.password} placeholder="Enter your Password" onChange={handelChange} ></input>
             <div className='paseye1'>{(open === false)? <AiFillEye onClick={toggle}/>:<AiFillEyeInvisible onClick={toggle}/>}</div>
             <div className="button" onClick={login}>Login</div>
             <div>or</div>
-            <div className="button" onClick={()=>navigate('/register')}>Register</div>
+           <button className="btn btn-warning"> <Link to='/register' style={{textDecoration:'none' }}>SignUp</Link></button>
+            <Link to='/passwordreset' style={{textDecoration:'none' }}>ForgetPassword</Link>
         </div>
     )
 }
