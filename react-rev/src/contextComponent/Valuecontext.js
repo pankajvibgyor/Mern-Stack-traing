@@ -1,9 +1,9 @@
- import React ,{useState,createContext} from "react";
+ import React ,{useState,createContext, useEffect} from "react";
 export const ValueContext=createContext()
 
 function ValueContextProvider({children}){
 
-
+const [Auth,setAuth]=useState(false)
 const[user ,setUser]=useState({
     firstName:'',
     lastName:'',
@@ -12,7 +12,7 @@ const[user ,setUser]=useState({
     password:'',
     reEnterPassword:''
 })
-const {firstName,lastName,Gender,email,password,reEnterPassword} = user
+
 
 const handelChange=(event)=>{
     event.preventDefault()
@@ -22,12 +22,8 @@ const handelChange=(event)=>{
      
  }
 
- 
- 
- 
-
     return(
-        <ValueContext.Provider value={{user,setUser,handelChange}}>
+        <ValueContext.Provider value={{user ,Auth ,setAuth,setUser,handelChange}}>
             {children}
         </ValueContext.Provider>
     )

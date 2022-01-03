@@ -3,12 +3,10 @@ import './registration.css'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import TextBox from 'react-native-password-eye';
-
 import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import { ValueContext } from '../../contextComponent/Valuecontext';
-
 import { useNavigate } from 'react-router-dom';
+
 function Registration() {
 
     // useContextAPI

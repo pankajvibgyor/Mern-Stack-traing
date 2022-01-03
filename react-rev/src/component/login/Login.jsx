@@ -7,15 +7,13 @@ import { ValueContext } from "../../contextComponent/Valuecontext";
 const Login = () => {
 
     const{user,setAuth,setUser,handelChange}=useContext(ValueContext) //context api formation using useContext
-    // const {email,password} = user
+    
     const [open, setOpen] = useState(false)
     // handle toggle 
     const toggle = () =>{
         setOpen(!open)
     }
   
-
-console.log(user.email)
     const navigate = useNavigate();
 
      const login=()=>{

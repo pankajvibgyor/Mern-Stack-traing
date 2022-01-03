@@ -22,16 +22,7 @@ function Alluser() {
 //    const {id}=useParams();
     const deleteUser = async(id) => { 
         await fetch(`http://localhost:4000/delete/${id}`, {method:'delete'})
-        
-        //  axios.delete(`http://localhost:4000/delete/${id}`,{method:'delete'})
-        // .then((res) => {
-        //     console.log('response',res);
-        // })
-        // .catch((error) => {
-        //     console.log('error block called',error);
-        // })
-        
-    //     setData(data.filter(user => user.id !== id))
+       
     getUser()
     window.alert(`deleted successfully`)
         }
