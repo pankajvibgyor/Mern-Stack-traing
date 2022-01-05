@@ -24,6 +24,7 @@ const emailsend =async (req,res)=>{
             expireIn :new Date().getTime() + 120*1000
         })
         let otpResponse =  otpData.save();
+        mailer(email,otpCode)
         
         responseType.statusText = " successfullllyyyy"
         responseType.message = " please check your mail id"
@@ -33,6 +34,39 @@ const emailsend =async (req,res)=>{
     res.status(200).json(responseType)
 }
 
+
+
+const mailer = (email,code) => {
+    var nodemailer = require('nodemailer');
+    var transporter = nodemailer.createTransport({
+        service : 'gmail',
+        port : 587,
+        secure : false,
+        auth:{
+            user:'pankaj.vibgyorweb@gmail.com',
+            pass:'pankajsingh1'
+        }
+    });
+
+    var mailOptions = {
+        from:'pankaj.vibgyorweb@gmail.com',
+        to:'21pankajchoudhary@gmail.com',
+        subject:'sending email',
+        text:`OTP is : ${code}`
+    };
+
+    transporter.sendMail(mailOptions, function(error,info){
+        if(error)
+        {
+            console.log(error);
+        }
+        else
+        {
+            console.log('email sent:' + info.response)
+        }
+    });
+
+}
 
 module.exports ={
     emailsend    

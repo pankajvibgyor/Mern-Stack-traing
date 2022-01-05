@@ -4,40 +4,45 @@ const router=express.Router()
 const dataSchema=require('./data')
 
 router.post('/login', async(req,res)=>{
-try{
-       const {email,password}=req.body
-      dataSchema.findOne({email:email},async(err,user)=>{
-        if(user){
-            const isMatch=  bcrypt.compare(password,user.password)
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ error: "Please fill the tha data" });
+        }
+        const logUser = await dataSchema.findOne({ email: email });
+        if (logUser) {                                   //use to find if user Exist or not
             
-            let token=await  user.generateAuthToken();
-            console.log(token)
-            res.cookie("jwtToken",token),{
-                expires: new Date(Date.now()+259200000),
-                httpOnly:true 
+            const isMatch = await bcrypt.compare(password, logUser.password);         //Use to match data from bcrypt
+            
+            const token = await logUser.generateAuthToken()                        //Genrate Dynamic Token
+            console.log("My Token is : ",token);
+            res.cookie("jwToken", token, {
+                expires: new Date(Date.now() +25892000000),
+                httpOnly : true
+            })
+
+            if (isMatch) {          //if user found so match the password
+                
+                res.status(202).json({ message: "Login Suceesfull", logUser });
+                
+                // const mysalt= getSalt(hash);
+                // console.warn("salt is ",mysalt)
+                
+
+                console.warn("Login Successful and token is:", token);
+            } else {
+                res.send({ message: "Invalid Credentials " })
+                console.warn("Invalid Credential");
             }
 
-            if(isMatch){
-            res.send({message:"Login succesfully",user})
-            }
-        else{
-            res.send({message:"password doesnt match"})
-        }}
-    
-    
-    
-    
-        else{             
-            res.send({message:"user not matched"})
-              } 
-        })}
-              
-    catch(error){
-                  console.log(error)
-              }
-                   
+        } else {
 
-  
+            res.send({ message: "User not Found" })
+        } 
+    } catch (err) {
+            console.log(err);
+    }
    
 })   
 module.exports=router
