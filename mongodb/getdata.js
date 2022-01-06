@@ -4,13 +4,13 @@ const dataSchema=require('./data')
 
 
 router.get("/get",async(req,res)=>{
-    dataSchema.find().then((user)=>{
-        res.json(user)
-    
-    })
-    .catch(err=>{
+    try{
+    const user =await dataSchema.find()
+        res.json(user)    
+    }
+    catch(err){
         console.log(err)
-    })
+    }
   
   
   })

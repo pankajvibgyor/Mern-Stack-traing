@@ -14,23 +14,14 @@ router.post('/login', async(req,res)=>{
         if (logUser) {                                   //use to find if user Exist or not
             
             const isMatch = await bcrypt.compare(password, logUser.password);         //Use to match data from bcrypt
-            
-            const token = await logUser.generateAuthToken()                        //Genrate Dynamic Token
-            console.log("My Token is : ",token);
-            res.cookie("jwToken", token, {
-                expires: new Date(Date.now() +25892000000),
-                httpOnly : true
-            })
+         
 
             if (isMatch) {          //if user found so match the password
                 
-                res.status(202).json({ message: "Login Suceesfull", logUser });
-                
-                // const mysalt= getSalt(hash);
-                // console.warn("salt is ",mysalt)
-                
+                res.status(202).json({ message: "Login Suceesfull", logUser });              
+                              
 
-                console.warn("Login Successful and token is:", token);
+                console.warn("Login Successful :");
             } else {
                 res.send({ message: "Invalid Credentials " })
                 console.warn("Invalid Credential");

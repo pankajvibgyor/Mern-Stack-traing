@@ -9,8 +9,9 @@ const deleteData=require('./delete')
 const patchData=require('./patch')
 dotenv.config({path:'./config.env'})
 const router=require('./router/router')
-const sortedData= require('./sortedData')
-const matchpass=require('./matchPass')
+// const sortedData= require('./sortedData')
+const changepass=require('./changepass')
+const otpverify=require('./otpverify')
 // const encrpt=require('./encryptionPass')
 
 const app=express()
@@ -20,7 +21,7 @@ mongoose.connect("mongodb://localhost:27017/formdata",{useNewUrlParser: true , u
 // mideelware creation
 app.use(express.json())
 app.use(cors()) 
-app.use(login,register,getData,matchpass,deleteData,patchData,router,sortedData)
+app.use(login,register,getData,deleteData,patchData,router,otpverify,changepass)
 
 
 

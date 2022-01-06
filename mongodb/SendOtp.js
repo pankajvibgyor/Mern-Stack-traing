@@ -5,7 +5,7 @@ const dataSchema = require('./data')
 const mongoose = require('mongoose');
 const emailsend =async (req,res)=>{
     
-    const {email}= req.body
+     const  {email}= req.body
 
     let data = await dataSchema.findOne({email:email})
     const responseType = {};
@@ -22,6 +22,7 @@ const emailsend =async (req,res)=>{
             email:req.body.email,
             code:otpCode,
             expireIn :new Date().getTime() + 120*1000
+        
         })
         let otpResponse =  otpData.save();
         mailer(email,otpCode)
@@ -69,5 +70,5 @@ const mailer = (email,code) => {
 }
 
 module.exports ={
-    emailsend    
+    emailsend   
 }
