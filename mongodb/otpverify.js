@@ -54,7 +54,7 @@ const emailsend =require('./SendOtp')
             res.status(401).json({error:"please type your otp "})
         }
         
-          const dataMatch= await otpSchema.findOne({code:code,expire:false})
+          const dataMatch= await otpSchema.findOne({code:code} ,{expire:false})
           console.log(dataMatch)
            if(dataMatch){  
                       
@@ -63,8 +63,11 @@ const emailsend =require('./SendOtp')
                 console.log("Time Gap", checkEx)
 
                 if (checkEx < 200000){              
-                     otpSchema.expire=true
-                     return res.status(202).json({ message: "OTP Matched..." });
+                      dataMatch.expire=true
+                      dataMatch.save()
+
+                      res.status(202).json({ message: "OTP Matched..." });
+                      
                 }
                 else {
                     console.log("OTP Expire")
@@ -74,6 +77,7 @@ const emailsend =require('./SendOtp')
                     return res.status(401).json({ message: "Wrong OTP.." });
                
             }
+          
     }
     catch(error){
         return res.status(404).json(error)
@@ -111,3 +115,40 @@ const emailsend =require('./SendOtp')
 
 // })
 // module.exports= router
+// router.post("/otpresend" ,async(req,res)=>{     
+//     try{ 
+//         const {code}=req.body
+//         if(!code){
+//             res.status(401).json({error:"please type your otp "})
+//         }
+        
+//           const dataMatch= await otpSchema.findOne({code:code})
+//           console.log(dataMatch)
+//            if(dataMatch){  
+                      
+//                 const timerOtp = dataMatch.updatedAt;                                                                                              
+//                 const checkEx = new Date() - timerOtp
+//                 console.log("Time Gap", checkEx)
+
+//                 if (checkEx < 200000){              
+//                     otpSchema.expire=true
+//                       res.status(202).json({ message: "OTP Matched..." });
+                      
+//                 }
+//                 else {
+//                     console.log("OTP Expire")
+//                     return res.status(405).json({ message: "OTP Expire...." });
+//                 }}
+//                 else{
+//                     return res.status(401).json({ message: "Wrong OTP.." });
+               
+//             }
+          
+//     }
+//     catch(error){
+//         return res.status(404).json(error)
+//     }
+
+
+//  })
+//  module.exports= router

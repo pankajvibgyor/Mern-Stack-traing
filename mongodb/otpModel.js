@@ -15,12 +15,11 @@ code:{
 expire:{
     type:Boolean,
     default:false
-
-
-},
+     
+    },
 expireIn:{
     type:Number,
-    required:true,
+    
     default:false
 },
 },

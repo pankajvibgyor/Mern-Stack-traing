@@ -18,13 +18,14 @@ router.post("/updatepass" , async (req,res)=>{
         console.log(pass.email)
         console.log(newData)
         if(newData){
-            const salt = await bcrypt.genSaltSync(10);
-            const password = await req.body.password;
-           let hash = await bcrypt.hashSync(password, salt);
-           pass.password = hash;
-            pass.save()
+            // const salt = await bcrypt.genSaltSync(10);
+        //    let password = await bcrypt.hashSync(req.body.password, salt);
+            // pass.password=password
+            pass.password=req.body.password
+           pass.save()
+            console.log(pass)
             return await res.status(200).json({message:"password is updated you can login now"})
-
+           
         }
         else{
               
@@ -35,7 +36,7 @@ router.post("/updatepass" , async (req,res)=>{
         }
     } 
 
-
+   
 
 
 })

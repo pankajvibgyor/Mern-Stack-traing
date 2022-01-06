@@ -13,7 +13,7 @@ const router=require('./router/router')
 const changepass=require('./changepass')
 const otpverify=require('./otpverify')
 // const encrpt=require('./encryptionPass')
-
+const resend=require('./resendOtp')
 const app=express()
 mongoose.connect("mongodb://localhost:27017/formdata",{useNewUrlParser: true , useUnifiedTopology: true })
 .then(()=>console.log("connection succesful")).catch((err)=>console.log(err));
@@ -21,7 +21,7 @@ mongoose.connect("mongodb://localhost:27017/formdata",{useNewUrlParser: true , u
 // mideelware creation
 app.use(express.json())
 app.use(cors()) 
-app.use(login,register,getData,deleteData,patchData,router,otpverify,changepass)
+app.use(login,register,getData,deleteData,patchData,router,otpverify,changepass,resend)
 
 
 
