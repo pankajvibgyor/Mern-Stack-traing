@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 const bcrypt=require('bcryptjs')
-const userSchema =new mongoose.Schema({
+const adminSchema =new mongoose.Schema({
     firstName:{
         type:String,
         required:true,
@@ -42,7 +42,7 @@ const userSchema =new mongoose.Schema({
     role:{
         type:String,
         enum:['user','admin'],
-        default:'user'
+        default:'admin'
     },
     contactNumber:{type:String},
     
@@ -50,7 +50,7 @@ const userSchema =new mongoose.Schema({
 },{timestamps:true})
 
 
-userSchema.pre('save',async function(next){
+adminSchema.pre('save',async function(next){
     if(!this.isModified("password")){
         next()
     }
@@ -58,12 +58,12 @@ userSchema.pre('save',async function(next){
     this.password=await bcrypt.hash(this.password,salt)
      next();
 })
-userSchema.virtual('fullName')
+adminSchema.virtual('fullName')
 .get(function(){
     return `${this.firstName} ${this.lastName}`
 })
-userSchema.methods.matchPasswords=async function(password){
+adminSchema.methods.matchPasswords=async function(password){
     return await bcrypt.compare(password,this.password)
 }
 
-module.exports=mongoose.model('userSchema',userSchema)
+module.exports=mongoose.model('adminSchema',adminSchema)

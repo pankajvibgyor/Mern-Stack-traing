@@ -2,7 +2,8 @@ const env =require('dotenv')
 const express =require("express")
 const app =express()
 //routes
-const userRoutes=require('./routes/user')
+const authRoutes=require('./routes/auth')
+const authadminRoutes=require('./routes/admin/auth')
 const connectDB = require('./database/db')
 
 // environement variable 
@@ -18,7 +19,8 @@ app.use(express.json());
 app.use(express.urlencoded({
   extended: true
 }));
-app.use('/api' ,userRoutes)
+
+app.use('/api' ,authRoutes,authadminRoutes)
 
 
 app.listen(PORT,()=>{
