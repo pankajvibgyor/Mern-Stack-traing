@@ -57,7 +57,7 @@ exports.signIn=async(req,res)=>{
 
         if(isMatch && admin.role=="admin"){
       //token generation            
-            const token =jwt.sign({_id:admin._id},process.env.JWT_SECREAT_KEY,{expiresIn:'1h'})
+            const token =jwt.sign({_id:admin._id,role:admin.role},process.env.JWT_SECREAT_KEY,{expiresIn:'1h'})
             const {_id,firstName,lastName,email,role,fullName}=admin
 
             res.status(200).json({message:" 😅 😅 wowww ho gaya login ⚽ 😸 🐌 💀 😄",
@@ -79,11 +79,3 @@ catch(error){
 // authentication 
 
 
-exports.requireSignin=(req,res ,next)=>{
-    var token = req.headers.authorization.split(' ')[1];
-    const admin =jwt.verify(token ,process.env.JWT_SECREAT_KEY)
-    req.admin=admin
-    console.log(admin)
-    next();
-
-}

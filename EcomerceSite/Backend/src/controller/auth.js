@@ -78,11 +78,3 @@ catch(error){
 // authentication 
 
 
-exports.requireSignin=(req,res ,next)=>{
-    var token = req.headers.authorization.split(' ')[1];
-    const user =jwt.verify(token ,process.env.JWT_SECREAT_KEY)
-    req.user=user
-    console.log(user)
-    next();
-
-}

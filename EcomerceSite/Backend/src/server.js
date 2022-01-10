@@ -5,7 +5,8 @@ const app =express()
 const authRoutes=require('./routes/auth')
 const authadminRoutes=require('./routes/admin/auth')
 const connectDB = require('./database/db')
-
+const category=require('./routes/category')
+const product=require('./routes/product')
 // environement variable 
 env.config({path:"./config.env"})
 //port server from env file
@@ -20,7 +21,7 @@ app.use(express.urlencoded({
   extended: true
 }));
 
-app.use('/api' ,authRoutes,authadminRoutes)
+app.use('/api' ,authRoutes,authadminRoutes,category,product)
 
 
 app.listen(PORT,()=>{
